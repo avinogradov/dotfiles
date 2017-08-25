@@ -1,261 +1,245 @@
-"-------------------------
-" Базовые настройки
-"-------------------------
-
-" Включаем несовместимость настроек с Vi (ибо Vi нам и не понадобится).
-set nocompatible
-
-" Показывать положение курсора всё время.
-set ruler  
-
-" Показывать незавершённые команды в статусбаре
-set showcmd  
-
-" Включаем нумерацию строк
-set nu
-
-" Фолдинг по отсупам
-set foldmethod=indent
-
-" Поиск по набору текста (очень полезная функция)
-set incsearch
-
-" Отключаем подстветку найденных вариантов, и так всё видно.
-set nohlsearch
-
-" Теперь нет необходимости передвигать курсор к краю экрана, чтобы подняться в режиме редактирования
-set scrolljump=7
-
-" Теперь нет необходимости передвигать курсор к краю экрана, чтобы опуститься в режиме редактирования
-set scrolloff=7
-
-" Выключаем надоедливый "звонок"
-set novisualbell
-set t_vb=   
-
-" Поддержка мыши
-set mouse=a
-set mousemodel=popup
-
-" Кодировка текста по умолчанию
+let g:Powerline_symbols = 'fancy'
+let g:solarized_termcolors=256
+set encoding=utf-8
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
 set termencoding=utf-8
 
-" Не выгружать буфер, когда переключаемся на другой
-" Это позволяет редактировать несколько файлов в один и тот же момент без необходимости сохранения каждый раз
-" когда переключаешься между ними
-set hidden
+syntax on                            " enable syntax highlighting
+set ruler                           " always show current position
+set backspace=indent,eol,start      " set backspace config, backspace as normal
+set nomodeline                      " security
 
-" Скрыть панель в gui версии ибо она не нужна
-set guioptions-=T
+" Highlight all search results
+set hlsearch                        " highlight search things
+set incsearch                       " go to search results as typing
 
-" Сделать строку команд высотой в одну строку
-set ch=1
-
-" Скрывать указатель мыши, когда печатаем
-set mousehide
-
-" Включить автоотступы
-set autoindent
-
-" Влючить подстветку синтаксиса
-syntax on
-
-" allow to use backspace instead of "x"
-set backspace=indent,eol,start whichwrap+=<,>,[,]
-
-" Преобразование Таба в пробелы
-set expandtab
-
-" Размер табулации по умолчанию
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-
-" Формат строки состояния
-set statusline=%<%f%h%m%r\ %b\ %{&encoding}\ 0x\ \ %l,%c%V\ %P 
-set laststatus=2
-
-" Включаем "умные" отспупы ( например, автоотступ после {)
-set smartindent
-
-" Fix <Enter> for comment
-set fo+=cr
-
-" Опции сесссий
-set sessionoptions=curdir,buffers,tabpages
-set nobackup
+set smartcase                       " but case-sensitive if expression contains a capital letter.
+set ignorecase                      " ignore case when searching
+set gdefault                        " assume global when searching or substituting
+set magic                           " set magic on, for regular expressions
+set showmatch                       " show matching brackets when text indicator is over them
+set ttymouse=xterm
+set nobackup                        " prevent backups of files, since using vcs
+set nowritebackup
 set noswapfile
-"-------------------------
-" Горячие клавишы
-"-------------------------
+set shiftwidth=2                    " set tab width
+set softtabstop=2
+set tabstop=2
+set smarttab
+set expandtab                       " use spaces, not tabs
+set autoindent                      " set automatic code indentation
+set hidden                          " allow background buffers w/out writing
+set list                            " show hidden characters
+set listchars=tab:\ \ ,trail:·      " show · for trailing space, \ \ for trailing tab
+set spelllang=en,ru                 " set spell check language
+set noeb vb t_vb=                   " disable audio and visual bells
+set foldenable
+set history=256
+set autowrite
+set nu                              " set line numbers on
+set wrap                            " set line wrapping on
+set foldmethod=indent               " folding by indent
+set scrolljump=7
+set scrolloff=7
+set smartindent                     " smart indent after {
 
-" Пробел в нормальном режиме перелистывает страницы
-nmap <Space> <PageDown>
+" Vertical / Horizontal scroll off settings
+set scrolloff=3
+set sidescrolloff=7
+set sidescroll=1
 
-" CTRL-F для omni completion
-imap <C-F> <C-X><C-O>
-
-" C-c and C-v - Copy/Paste в "глобальный клипборд"
-vmap <C-C> "+yi
-imap <C-V> <esc>"+gPi
-
-" Заставляем shift-insert работать как в Xterm
-map <S-Insert> <MiddleMouse>
-
-" C-y - удаление текущей строки
-nmap <C-y> dd
-imap <C-y> <esc>ddi
-
-" C-d - дублирование текущей строки
-imap <C-d> <esc>yypi
-
-" Поиск и замена слова под курсором
-nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
-
-" F2 - быстрое сохранение
-"nmap <F2> :w<cr>
-"vmap <F2> <esc>:w<cr>i
-"imap <F2> <esc>:w<cr>i
-
-" search across disk
-nmap <F3> :Grep<cr>
-vmap <F3> <esc>:Grep<cr>
-imap <F3> <esc>:Grep<cr>
-nmap <F4> :Rgrep<cr>
-vmap <F4> <esc>:Rgrep<cr>
-imap <F4> <esc>:Rgrep<cr>
-
-" F5 - просмотр списка буферов6
-nmap <F5> <Esc>:UndotreeToggle<cr>
-vmap <F5> <esc>:UndotreeToggle<cr>
-imap <F5> <esc><esc>:UndotreeToggle<cr>
-
-" F6 - предыдущий буфер
-"map <F6> :bp<cr>
-"vmap <F6> <esc>:bp<cr>i
-"imap <F6> <esc>:bp<cr>i
-map <F6> :NERDTreeToggle<cr>
-vmap <F6> <esc>:NERDTreeToggle<cr>
-imap <F6> <esc>:NERDTreeToggle<cr>
-
-map <F7> :TagbarToggle<cr>
-vmap <F7> <esc>:TagbarToggle<cr>
-imap <F7> <esc>:TagbarToggle<cr>
-
-" F8 - список закладок
-map <F8> :MarksBrowser<cr>
-vmap <F8> <esc>:MarksBrowser<cr>
-imap <F8> <esc>:MarksBrowser<cr>
-
-map <F9> :TRegister<cr>
-vmap <F9> <esc>:TRegister<cr>
-imap <F9> <esc>:TRegister<cr>
-
-map <F10> :SessionList<cr>
-vmap <F10> <esc>:SessionList<cr>
-imap <F10> <esc>:SessionList<cr>
-
-map <F11> :GitGutterToggle<cr>
-vmap <F11> <esc>:GitGutterToggle<cr>
-imap <F11> <esc>:GitGutterToggle<cr>
-
-" F12 - обозреватель файлов
-map <F12> :Ex<cr>
-vmap <F12> <esc>:Ex<cr>i
-imap <F12> <esc>:Ex<cr>i
-
-" < & > - делаем отступы для блоков
-vmap < <gv
-vmap > >gv
-
-" Выключаем ненавистный режим замены
-imap >Ins> <Esc>i
-
-" Меню выбора кодировки текста (koi8-r, cp1251, cp866, utf8)
-set wildmenu
-set wcm=<Tab> 
-menu Encoding.koi8-r :e ++enc=koi8-r<CR>
-menu Encoding.windows-1251 :e ++enc=cp1251<CR>
-menu Encoding.cp866 :e ++enc=cp866<CR>
-menu Encoding.utf-8 :e ++enc=utf8 <CR>
-
-" Редко когда надо [ без пары =)
-imap [ []<LEFT>
-" Аналогично и для {
-imap {<CR> {<CR>}<Esc>O
-
-" С-q - выход из Vim 
-map <C-Q> <Esc>:qa<cr>
-
-
-" Автозавершение слов по tab =)
-function InsertTabWrapper()
-let col = col('.') - 1
-if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-else
-    return "\<c-p>"
-endif
-endfunction
-imap <tab> <c-r>=InsertTabWrapper()<cr>
-
-" Слова откуда будем завершать
-set complete=""
-" Из текущего буфера
-set complete+=.
-" Из словаря
-set complete+=k
-" Из других открытых буферов
-set complete+=b
-" из тегов 
-set complete+=t
-
-" Turning filetype off temporary
-filetype off
-
-" Vundle plugin
-set rtp+=~/.vim/bundle/vundle
+set nocompatible
+set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 
-Plugin 'gmarik/vundle'
+" Let Vindle manage itself
+Plugin 'gmarik/Vundle.vim'
 
+" Plugins
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-airline/vim-airline'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/syntastic'
+Plugin 'elzr/vim-json'
+Plugin 'honza/vim-snippets'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+" vim-chef plugin
+" Bundle 'MarcWeber/vim-addon-mw-utils'
+" Bundle 'tomtom/tlib_vim'
+" Bundle 'garbas/vim-snipmate'
+" Bundle 'vadv/vim-chef'
+
+" Required, plugins available after
 call vundle#end()
-
 filetype plugin indent on
 
-" Solarized Color Theme
-Bundle 'altercation/vim-colors-solarized'
-
-" Some settings to enable the theme:
-set number        " Show line numbers
-syntax enable     " Use syntax highlighting
-set background=dark
-let g:solarized_termcolors = 256
-
+" Color scheme
 colorscheme solarized
+set background=dark
 
-" Настройки для SessionMgr
-let g:SessionMgr_AutoManage = 0
-let g:SessionMgr_DefaultName = "mysession"
+" vim-airline
+set laststatus=2
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#syntastic#enabled = 1
 
-" Настройки для Tlist (показвать только текущий файл в окне навигации по  коду)
-let g:Tlist_Show_One_File = 1
+" Closing brackets
+imap [ []<LEFT>
+imap {<CR> {<CR>}<Esc>0
 
-set completeopt-=preview
-set completeopt+=longest
-set mps-=[:]
+" Completion
+" vim-chef plugin
+" autocmd FileType ruby,eruby set filetype=ruby,eruby.chef
 
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+autocmd FileType python     set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html       set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css        set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml        set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php        set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c          set omnifunc=ccomplete#Complete
 
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
-set showmode
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 
-map <C-a> :BufExplorer<CR>
-vmap <C-a> <esc>:BufExplorer<cr>
-imap <C-a> <esc>:BufExplorer<cr>
+" Syntastic configs
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-let g:gitgutter_highlight_lines = 0
-highlight clear SignColumn
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 3
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '🤔'
+let g:syntastic_warning_symbol = '😱'
+let g:syntastic_style_warning_symbol = '💩'
+
+let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_coffee_checkers = ['coffeelint']
+let g:syntastic_html_tidy_exec = 'tidy5'
+let g:syntastic_html_tidy_ignore_errors = [" proprietary attribute \"ng-"]
+let g:syntastic_haml_checkers = ['haml_lint']
+
+" Folding
+let g:vim_markdown_folding_disabled = 0
+
+highlight link SyntasticErrorSign        SignColumn
+highlight link SyntasticWarningSign      SignColumn
+highlight link SyntasticStyleErrorSign   SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+
+"
+" Functions
+"
+
+" Removes trailing spaces
+function TrimWhiteSpace()
+  %s/\s*$//
+  ''
+:endfunction
+
+map  <leader>= :call TrimWhiteSpace()<CR>
+map! <leader>= :call TrimWhiteSpace()<CR>
+
+" Adds space between hash content and braces
+function AddsSpaceBetweenHashContentAndBraces()
+  silent! s/{\([^ ]\)/{ \1/
+  silent! s/\([^ ]\)}/\1 }/
+  ''
+:endfunction
+
+map  <leader>{ :call AddsSpaceBetweenHashContentAndBraces()<CR>
+map! <leader>{ :call AddsSpaceBetweenHashContentAndBraces()<CR>
+
+" Collapse multiple blank lines (regardless of quantity) into a single blank
+" line.
+function CollapseMultipleBlankLines()
+  g/^\_$\n\_^$/d
+  ''
+:endfunction
+
+map  <leader>- :call CollapseMultipleBlankLines()<CR>
+map! <leader>- :call CollapseMultipleBlankLines()<CR>
+
+" Auto complete
+let g:stop_autocomplete=0
+
+function! CleverTab(type)
+  if a:type=='omni'
+    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+      let g:stop_autocomplete=1
+      return "\<TAB>"
+    elseif !pumvisible() && !&omnifunc
+      return "\<C-X>\<C-O>\<C-P>"
+    endif
+  elseif a:type=='keyword' && !pumvisible() && !g:stop_autocomplete
+    return "\<C-X>\<C-N>\<C-P>"
+  elseif a:type=='next'
+    if g:stop_autocomplete
+      let g:stop_autocomplete=0
+    else
+      return "\<C-N>"
+    endif
+  endif
+  return ''
+endfunction
+
+inoremap <silent><TAB> <C-R>=CleverTab('omni')<CR><C-R>=CleverTab('keyword')<CR><C-R>=CleverTab('next')<CR>
+
+function! UseSingleQuotes()
+  execute ":%s/\"/'/g"
+endfunction
+map <Leader>' :call UseSingleQuotes()<CR>
+
+function! UseDoubleQuotes()
+  execute ":%s/'/\"/g"
+endfunction
+map <Leader>" :call UseDoubleQuotes()<CR>
+
+" Improve 'n' command (for searches)
+nmap n nzz
+nmap N Nzz
+
+" A trick for when you forgot to sudo before editing a file that requires root
+" privileges (typically /etc/hosts).
+" This lets you use w!! to do that after you opened the file already:
+cmap w!! w !sudo tee % >/dev/null
+
+au BufNewFile,BufRead *.thor       set filetype=ruby
+au BufNewFile,BufRead Guardfile    set filetype=ruby
+au BufNewFile,BufRead .pryrc       set filetype=ruby
+au BufNewFile,BufRead pryrc        set filetype=ruby
+au BufNewFile,BufRead Vagrantfile  set filetype=ruby
+au BufNewFile,BufRead *.pp         set filetype=ruby
+au BufNewFile,BufRead *.prawn      set filetype=ruby
+au BufNewFile,BufRead Appraisals   set filetype=ruby
+au BufNewFile,BufRead Capfile      set filetype=ruby
+au BufNewFile,BufRead *.rabl       set filetype=ruby
+au BufNewFile,BufRead .psqlrc      set filetype=sql
+au BufNewFile,BufRead psqlrc       set filetype=sql
+au BufNewFile,BufRead *.less       set filetype=css
+au BufNewFile,BufRead bash_profile set filetype=sh
+au BufNewFile,BufRead *.hbs        set filetype=html
+au BufNewFile,BufRead *.yml.sample set filetype=yaml
+
+" Git hooks
+au BufNewFile,BufRead applypatch-msg     set filetype=ruby
+au BufNewFile,BufRead commit-msg         set filetype=ruby
+au BufNewFile,BufRead post-update        set filetype=ruby
+au BufNewFile,BufRead pre-applypatch     set filetype=ruby
+au BufNewFile,BufRead pre-commit         set filetype=ruby
+au BufNewFile,BufRead pre-push           set filetype=ruby
+au BufNewFile,BufRead pre-rebase         set filetype=ruby
+au BufNewFile,BufRead prepare-commit-msg set filetype=ruby
